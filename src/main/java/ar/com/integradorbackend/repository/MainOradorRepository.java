@@ -1,6 +1,7 @@
 package ar.com.integradorbackend.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import ar.com.integradorbackend.orador.Orador;
 
@@ -19,7 +20,9 @@ public class MainOradorRepository {
         Orador foundedOrador = repository.getById(1L);
         System.out.println(foundedOrador);
         // repository.delete(12L);
-        foundedOrador.setName("Ignacio");
-        repository.update(foundedOrador);
+        // foundedOrador.setName("Ignacio");
+        // repository.update(foundedOrador);
+        List<Orador> list = repository.findAll();
+        System.out.println(list);
     }
 }

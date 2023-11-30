@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.integradorbackend.orador.Orador;
@@ -15,7 +16,6 @@ public class MySQLOradorRepository implements OradorRepository {
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
         String sql = "DELETE FROM oradores WHERE id_orador = ?";
 
         try (Connection conn = ConnectionsManager.getConnection()) {
@@ -30,8 +30,37 @@ public class MySQLOradorRepository implements OradorRepository {
 
     @Override
     public List<Orador> findAll() {
-        // TODO Auto-generated method stub
-        return null;
+        String sql = "SELECT id_orador, nombre, apellido, mail, tema, fecha_alta FROM oradores";
+        List<Orador> foundedOradores = new ArrayList<>();
+
+        try (Connection conn = ConnectionsManager.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            // Cargamos los datos en la sentencia
+            ResultSet res = statement.executeQuery();
+
+            while (res.next()) {
+
+                Long _id = res.getLong(1);
+                String nombre = res.getString(2);
+                String apellido = res.getString(3);
+                String mail = res.getString(4);
+                String tema = res.getString(5);
+                Date fechaAlta = res.getDate(6);
+
+                Orador oneOrador = new Orador(_id, nombre, apellido, mail, tema, fechaAlta.toLocalDate());
+                foundedOradores.add(oneOrador);
+            }
+
+            if (res.next()) {
+                // Obtengo los datos
+            }
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException("No se encontro el orador", e);
+        }
+
+        return foundedOradores;
     }
 
     @Override
@@ -66,7 +95,6 @@ public class MySQLOradorRepository implements OradorRepository {
 
     @Override
     public void save(Orador orador) {
-        // TODO Auto-generated method stub
         String sql = "INSERT INTO oradores (nombre, apellido, mail, tema, fecha_alta) VALUES (?,?,?,?,?)";
 
         try (Connection conn = ConnectionsManager.getConnection()) {
@@ -88,7 +116,6 @@ public class MySQLOradorRepository implements OradorRepository {
 
     @Override
     public void update(Orador orador) {
-        // TODO Auto-generated method stub
         String sql = "UPDATE oradores SET nombre = ?, apellido = ?, mail = ?, tema = ?, fecha_alta = ? WHERE id_orador = ?";
 
         try (Connection conn = ConnectionsManager.getConnection()) {
