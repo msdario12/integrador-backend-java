@@ -7,7 +7,7 @@ import java.time.LocalDate;
  */
 public class Orador {
 
-    String id;
+    Long id;
     String name;
     String lastName;
     String email;
@@ -15,7 +15,7 @@ public class Orador {
     LocalDate startDate;
 
     // constructor with all attributes
-    public Orador(String id, String name, String lastName, String email, String theme, LocalDate startDate) {
+    public Orador(Long id, String name, String lastName, String email, String theme, LocalDate startDate) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -34,11 +34,11 @@ public class Orador {
     }
 
     // getter's and setter's
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -80,6 +80,12 @@ public class Orador {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Orador [id=" + id + ", name=" + name + ", lastName=" + lastName + ", email=" + email + ", theme="
+                + theme + ", startDate=" + startDate + "]";
     }
 
 }
