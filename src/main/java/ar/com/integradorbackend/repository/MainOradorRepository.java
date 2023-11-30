@@ -16,8 +16,10 @@ public class MainOradorRepository {
         // LocalDate.now());
         // repository.save(newOrador);
         // System.out.println(newOrador);
-        Orador foundedOrador = repository.getById(2L);
+        Orador foundedOrador = repository.getById(1L);
         System.out.println(foundedOrador);
-        repository.delete(12L);
+        // repository.delete(12L);
+        foundedOrador.setName("Ignacio");
+        repository.update(foundedOrador);
     }
 }
