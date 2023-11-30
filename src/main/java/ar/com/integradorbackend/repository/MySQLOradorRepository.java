@@ -16,6 +16,15 @@ public class MySQLOradorRepository implements OradorRepository {
     @Override
     public void delete(Long id) {
         // TODO Auto-generated method stub
+        String sql = "DELETE FROM oradores WHERE id_orador = ?";
+
+        try (Connection conn = ConnectionsManager.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("No se pudo eliminar el orador", e);
+        }
 
     }
 

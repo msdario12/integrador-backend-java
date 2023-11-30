@@ -18,5 +18,6 @@ public class MainOradorRepository {
         // System.out.println(newOrador);
         Orador foundedOrador = repository.getById(2L);
         System.out.println(foundedOrador);
+        repository.delete(12L);
     }
 }
