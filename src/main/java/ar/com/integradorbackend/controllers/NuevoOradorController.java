@@ -25,14 +25,23 @@ public class NuevoOradorController extends HttpServlet {
 
     private OradorRepository repository = new MySQLOradorRepository();
 
+    private ObjectMapper getObjectMapper() {
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        return mapper;
+    };
+
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         // Obtener JSON desde frontEnd
-        String name = req.getParameter("nombre");
-        String lastName = req.getParameter("apellido");
-        String email = req.getParameter("email");
-        String theme = req.getParameter("tema");
+        String JsonFromFront = req.getReader()
+                .lines()
+                .collect(Collectors.joining(System.lineSeparator()));
+        // Converter JSON to JavaObject
+        ObjectMapper mapper = this.getObjectMapper();
 
-        String json = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,9 +49,10 @@ public class NuevoOradorController extends HttpServlet {
         List<Orador> oradoresList = this.repository.findAll();
 
         // Convertir de JSON a JavaObject usando jackson2
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        // ObjectMapper mapper = new ObjectMapper();
+        // mapper.registerModule(new JavaTimeModule());
+        // mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        ObjectMapper mapper = this.getObjectMapper();
 
         String jsonString = mapper.writeValueAsString(oradoresList);
 
