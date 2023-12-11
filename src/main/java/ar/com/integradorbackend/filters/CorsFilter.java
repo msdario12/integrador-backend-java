@@ -22,7 +22,8 @@ public class CorsFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
 
-        List<String> originesPermitidos = List.of("http://localhost:8080", "http://127.0.0.1:8080");
+        List<String> originesPermitidos = List.of("http://localhost:8080", "http://127.0.0.1:8080",
+                "http://localhost:33063", "http://127.0.0.1:33063");
 
         String origin = ((HttpServletRequest) req).getHeader("Origin");
 
