@@ -88,6 +88,7 @@ public class NuevoOradorController extends HttpServlet {
                 resp.getWriter().print(jsonString);
         }
 
+        @Override
         protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
                 super.doDelete(req, resp);
 
@@ -97,6 +98,7 @@ public class NuevoOradorController extends HttpServlet {
 
         }
 
+        @Override
         protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
                 super.doPut(req, resp);
                 String id = req.getParameter("id");
